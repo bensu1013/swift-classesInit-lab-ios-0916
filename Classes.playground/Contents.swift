@@ -17,7 +17,21 @@ import Foundation
  Create a new class called `Person`. This class should include properties for a person's first and last name. Name these properties `firstName` and `lastName`. You should also create an initializer that takes a first and last name as parameters and assigns them to the property.
  */
 // write your code here
-
+class Person {
+    var firstName = ""
+    var lastName = ""
+    var fullName = ""
+    init(firstName: String, lastName: String) {
+        self.firstName = firstName
+        self.lastName = lastName
+        self.fullName = "\(firstName) \(lastName)"
+    }
+    
+    func greet(_ person: Person) -> String {
+        return "Hello, \(person.firstName)!"
+    }
+    
+}
 
 
 
@@ -82,7 +96,19 @@ extension Double {
 }
 
 // write your code here
-
+class Transaction {
+    var amount:Double = 0.0
+    var type: String = ""
+    var description: String = ""
+    
+    init(type: String, amount: Double) {
+        self.amount = amount
+        self.type = type
+        self.description = "Transaction: \(type) in the amount of $\(amount.toMoney)"
+    }
+    
+    
+}
 
 
 
@@ -134,7 +160,34 @@ assert(transaction2.description == "Transaction: debit in the amount of $1.20", 
  */
 // write your code here
 
-
+class BankAccount {
+    var owner: Person
+    var transactions: [Transaction] = []
+    var balance: Double {
+        get {
+            var total: Double = 0.0
+            for amount in transactions {
+                if amount.type == "in" {
+                    total += amount.amount
+                } else {
+                    total -= amount.amount
+                }
+            }
+            return total
+        }
+        
+    }
+    
+    init(owner: Person){
+        self.owner = owner
+    }
+    func deposit(_ amount: Double) {
+        self.transactions.append(Transaction(type: "in", amount: amount))
+    }
+    func withdraw(_ amount: Double) {
+        self.transactions.append(Transaction(type: "out", amount: amount))
+    }
+}
 
 
 
